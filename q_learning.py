@@ -5,41 +5,39 @@ Classes:
     Qlearning
 """
 import environment as ev
-from actor import Actor
-from world import World
+from agent import Agent
 
 
 class Qlearning:
     @staticmethod
     def learn_strategy(
-        actor: Actor,
-        world: World,
+        agent: Agent,
         discount_factor: float,
         learning_rate: float,
         epochs: int,
-        step_multiplier: int,
+        max_steps: int
     ) -> None:
         """
         Perform Q-learning
-        :param actor: actor performing action
-        :param world: world to learn strategy on
+        :param agent: agent performing action
         :param discount_factor: discount factor for future rewards
         :param learning_rate: rate at which strategy should learn
         :param epochs: number of training iterations
-        :param step_multiplier: steps multiplier for maximum number of performed steps
+        :param max_steps: maximum steps that agent can perform in iteration
         """
+        avg_rewards_progress = []
         for i in range(epochs):
             # Maximum number of steps
-            steps = world.border * step_multiplier
+            steps = max_steps
             # Starting position for iteration
-            pos_x, pos_y = actor.get_pos()
+            pos_x, pos_y = agent.get_pos()
 
             # While possible steps and not reached exit
-            while steps > 0 and world.peek(pos_x, pos_y) not in [1, 2]:
+            while steps > 0 and not agent.reached_exit():
                 # Pick action
-                action = actor.pick_action()
+                action = agent.pick_action()
                 # Perform action and get new location
-                next_x, next_y = actor.get_new_position(action)
+                next_x, next_y = agent.get_new_position(action)
 
                 # Receive reward and calculate temporal difference
                 reward = ev.rewards[next_x][next_y]
@@ -54,12 +52,16 @@ class Qlearning:
                 ev.q_values[pos_x][pos_y][action] = round(new_q_val, 2)
 
                 steps -= 1
-                pos_x, pos_y = actor.get_pos()
+                pos_x, pos_y = agent.get_pos()
             
             # Find new starting position
-            actor.set_new_start_position()
+            agent.set_new_start_position()
 
             # Save q-values every 50 iterations
-            # if i % 20 == 0:
-            #     for row in ev.q_values[:-1]:
-            #     print(*row[:-1])
+            if (i + 1) % 50 == 0:
+                avg_values = [[round(sum(values)/4) for values in row[:-1]] for row in ev.q_values[:-1]]
+                avg_rewards_progress.append(avg_values)
+                print("Iteration:", i + 1)
+                for row in avg_values:
+                    print("".join(str(val).rjust(5) for val in row))
+        return avg_rewards_progress

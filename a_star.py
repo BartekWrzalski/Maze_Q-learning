@@ -6,17 +6,16 @@ Classes:
 """
 import math
 from queue import PriorityQueue
-
-from actor import Actor
+from agent import Agent
 from world import World
 
 
 class A_Star:
     @staticmethod
-    def run_algorithm(actor: Actor, world: World) -> list[tuple]:
+    def run_algorithm(agent: Agent, world: World) -> list[tuple]:
         """
         Performs A* algorithm in given instance of
-        :param actor: actor to get starting position from
+        :param agent: agent to get starting position from
         :param world: world on which perfomr algorithm
         :returns: list of transition from start to finish
         """
@@ -39,15 +38,15 @@ class A_Star:
             return result
 
         # lenght of best distance from start to key node
-        distance_travelled = {actor.get_pos(): 0}
+        distance_travelled = {agent.get_pos(): 0}
 
         # lenght of best possible distance from start to exit if it
         # goes by key node (travelled + distance to exit)
-        best_distances = {actor.get_pos(): calculate_distance(*actor.get_pos())}
+        best_distances = {agent.get_pos(): calculate_distance(*agent.get_pos())}
 
         # set of nodes to be discovered, prioritize by distance to exit
         discovered = PriorityQueue()
-        discovered.put((best_distances[actor.get_pos()], actor.get_pos()))
+        discovered.put((best_distances[agent.get_pos()], agent.get_pos()))
 
         # all transitions made during algorithm
         path = {}

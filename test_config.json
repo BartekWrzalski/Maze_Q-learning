@@ -1,12 +1,72 @@
 [
     {
-        "name": "",
-        "border_size": 10,
-        "wall_density": 0.35,
+        "name": "default",
+        "border_size": 12,
+        "wall_density": 0.25,
         "epsilon": 0.7,
         "discount_factor": 0.9,
         "learning_rate": 0.9,
-        "epochs": 1000,
-        "m": 7
+        "epochs": 500,
+        "step_multiplier": 6
+    },
+    {
+        "name": "high_density",
+        "border_size": 12,
+        "wall_density": 0.5,
+        "epsilon": 0.7,
+        "discount_factor": 0.9,
+        "learning_rate": 0.9,
+        "epochs": 500,
+        "step_multiplier": 6
+    },
+    {
+        "name": "low_epsilon",
+        "border_size": 12,
+        "wall_density": 0.25,
+        "epsilon": 0.1,
+        "discount_factor": 0.9,
+        "learning_rate": 0.9,
+        "epochs": 500,
+        "step_multiplier": 6
+    },
+    {
+        "name": "high_epsilon",
+        "border_size": 12,
+        "wall_density": 0.25,
+        "epsilon": 0.95,
+        "discount_factor": 0.9,
+        "learning_rate": 0.9,
+        "epochs": 500,
+        "step_multiplier": 6
+    },
+    {
+        "name": "low_epochs",
+        "border_size": 12,
+        "wall_density": 0.25,
+        "epsilon": 0.7,
+        "discount_factor": 0.9,
+        "learning_rate": 0.9,
+        "epochs": 100,
+        "step_multiplier": 6
+    },
+    {
+        "name": "low_discount_fac",
+        "border_size": 12,
+        "wall_density": 0.25,
+        "epsilon": 0.7,
+        "discount_factor": 0.1,
+        "learning_rate": 0.9,
+        "epochs": 500,
+        "step_multiplier": 6
+    },
+    {
+        "name": "low_learning_rate",
+        "border_size": 12,
+        "wall_density": 0.25,
+        "epsilon": 0.7,
+        "discount_factor": 0.9,
+        "learning_rate": 0.1,
+        "epochs": 500,
+        "step_multiplier": 6
     }
 ]

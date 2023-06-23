@@ -174,7 +174,7 @@ class World:
         Return random node that is not wall o exit (empty node)
         """
         i, j = random.randint(0, self.border - 1), random.randint(0, self.border - 1)
-        while self.world[i][j] == "x":
+        while self.world[i][j] != 0:
             i, j = random.randint(0, self.border - 1), random.randint(
                 0, self.border - 1
             )

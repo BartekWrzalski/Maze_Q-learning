@@ -1,19 +1,19 @@
 """
-Module with actor
+Module with Agent
 
 Classes:
-    Actor
+    Agent
 """
 from world import World
 import environment as ev
 import random
 
 
-class Actor:
+class Agent:
     def __init__(self, world: World, epsilon: float) -> None:
         """
-        :param world: instance of world for actor to perform actions
-        :param epsilon: probability of actor choosing best possible action (default)
+        :param world: instance of world for Agent to perform actions
+        :param epsilon: probability of Agent choosing best possible action (default)
         """
         self.world = world
         self.epsilon = epsilon
@@ -30,7 +30,7 @@ class Actor:
     def pick_action(self, epsilon: float = None) -> int:
         """
         Pick next action to perform
-        :param epsilon: probability of actor choosing best possible action. If not specified, get one given in constructor
+        :param epsilon: probability of Agent choosing best possible action. If not specified, get one given in constructor
         :returns: number of action to perform
         """
         if not epsilon:
@@ -44,7 +44,7 @@ class Actor:
 
     def get_new_position(self, action: int) -> tuple[int, int]:
         """
-        Get new position after performing action.If actor can move to this node, move actor
+        Get new position after performing action.If Agent can move to this node, move Agent
         :param action: number of action to perform
         :returns: index of next position
         """
@@ -72,8 +72,8 @@ class Actor:
 
     def get_shortest_path(self) -> list[tuple[int, int]]:
         """
-        Try to find path from actor position to exit by always performing best action (epsilon = 1)
-        :returns: list of nodes visited by actor
+        Try to find path from Agent position to exit by always performing best action (epsilon = 1)
+        :returns: list of nodes visited by Agent
         """
         start_x, start_y = self.x, self.y
         shortest_path = [(self.x, self.y)]
@@ -89,3 +89,7 @@ class Actor:
 
         self.x, self.y = start_x, start_y
         return shortest_path
+
+    def reached_exit(self) -> bool:
+        # True if current Agent location is one of exits
+        return (self.x, self.y) in self.world.good_exits + self.world.bad_exits
